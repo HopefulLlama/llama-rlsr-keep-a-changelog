@@ -1,0 +1,35 @@
+{
+  "name": "llama-rlsr-keep-a-changelog",
+  "version": "0.0.0",
+  "description": "NPM package to release things",
+  "main": "src/llama-rlsr-keep-a-changelog.js",
+  "scripts": {
+    "test": "gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HopefulLlama/llama-rlsr-keep-a-changelog.git"
+  },
+  "keywords": [
+    "npm",
+    "release-automation",
+    "release",
+    "nodejs"
+  ],
+  "author": "jonlaw10170@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/HopefulLlama/llama-rlsr-keep-a-changelog/issues"
+  },
+  "homepage": "https://github.com/HopefulLlama/llama-rlsr-keep-a-changelog#readme",
+  "dependencies": {
+    "winston": "^2.3.1"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-jasmine": "^2.4.2",
+    "gulp-jshint": "^2.0.4",
+    "jshint": "^2.9.5",
+    "llama-rlsr": "0.0.2"
+  }
+}
