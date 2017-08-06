@@ -1,6 +1,6 @@
 {
   "name": "llama-rlsr-keep-a-changelog",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "NPM package to release things",
   "main": "src/llama-rlsr-keep-a-changelog.js",
   "scripts": {
