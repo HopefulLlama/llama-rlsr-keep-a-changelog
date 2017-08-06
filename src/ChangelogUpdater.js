@@ -1,4 +1,25 @@
-const fs = require('fs');
+const Util = require('./Util');
+
+function applyDefaults(config) {
+  config.placeholder = (config.placeholder !== undefined) ? config.placeholder : '';
+  return config;
+}
+
+function generateDate(date) {
+  let year = date.getFullYear().toString();
+  let month = date.getMonth().toString();
+  let day = date.getDate().toString();
+
+  if(month.length === 1) {
+    month = '0' + month;
+  }
+
+  if(day.length === 1) {
+    day = '0' + day;
+  }
+
+  return `${year}-${month}-${day}`;
+}
 
 function generateChanges(newVersion, placeholder) {
   let date = new Date();
@@ -12,24 +33,14 @@ function generateChanges(newVersion, placeholder) {
 
   return insertions.concat([
     '',
-    `## [${newVersion}] ${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`
+    `## [${newVersion}] ${generateDate(date)}`
   ])
   .reverse();
 }
 
-function getIndexByRegex(array, regex) {
-  let index = -1;
-  array.forEach((element, i) => {
-    if(element.match(regex)) {
-      index = i;
-    }
-  });
-  return index;
-}
-
 function insertChanges(changelog, newVersion, placeholder) {
   let lines = changelog.split('\n');
-  let index = getIndexByRegex(lines, /## \[Unreleased\]/) + 1;
+  let index = Util.getIndexByRegex(lines, /## \[Unreleased\]/) + 1;
   generateChanges(newVersion, placeholder).forEach((line) => {
     lines.splice(index, 0, line);
   });
@@ -37,21 +48,11 @@ function insertChanges(changelog, newVersion, placeholder) {
   return lines.join('\n');
 }
 
-function updateDiffLinks(changelog, urlGenerator, oldVersion, newVersion, latest) {
-  let lines = changelog.split('\n');
-  let index = getIndexByRegex(lines, /\[Unreleased\]: /);
-
-  lines.splice(index + 1, 0, `[${newVersion}]: ${urlGenerator(oldVersion, newVersion)}`);
-  lines.splice(index, 1, `[Unreleased]: ${urlGenerator(newVersion, latest)}`);
-
-  return lines.join('\n');
-}
-
 function update(versionMetadata, config) {
-  let changelog = fs.readFileSync(config.path).toString();
-  changelog = insertChanges(changelog, versionMetadata.newVersion, config.placeholder);
-  changelog = updateDiffLinks(changelog, config.urlGenerator, versionMetadata.oldVersion, versionMetadata.newVersion, config.latest);
-  fs.writeFileSync(config.path, changelog);
+  config = applyDefaults(config);
+  Util.updateFile(config.path, (changelog) => {
+    return insertChanges(changelog, versionMetadata.newVersion, config.placeholder);
+  });
 }
 
 module.exports = {

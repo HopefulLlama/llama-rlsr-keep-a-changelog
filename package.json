@@ -30,6 +30,6 @@
     "gulp-jasmine": "^2.4.2",
     "gulp-jshint": "^2.0.4",
     "jshint": "^2.9.5",
-    "llama-rlsr": "0.0.2"
+    "llama-rlsr": "0.0.3"
   }
 }
