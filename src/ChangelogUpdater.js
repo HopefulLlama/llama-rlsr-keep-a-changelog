@@ -2,6 +2,7 @@ const Util = require('./Util');
 
 function applyDefaults(config) {
   config.placeholder = (config.placeholder !== undefined) ? config.placeholder : '';
+  config.path = (config.path !== undefined) ? config.path : './CHANGELOG.md';
   return config;
 }
 

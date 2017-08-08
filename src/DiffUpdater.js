@@ -4,6 +4,7 @@ function applyDefaults(config) {
   config.tag = (config.tag !== undefined) ? config.tag : {};
   config.tag.prefix = (config.tag.prefix !== undefined) ? config.tag.prefix : '';
   config.tag.suffix = (config.tag.suffix !== undefined) ? config.tag.suffix : '';
+  config.path = (config.path !== undefined) ? config.path : './CHANGELOG.md';
   return config;
 }
 
