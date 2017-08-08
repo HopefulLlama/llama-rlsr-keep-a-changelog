@@ -1,12 +1,14 @@
+const merge = require('merge');
+
 const Util = require('./Util');
 
-function applyDefaults(config) {
-  config.tag = (config.tag !== undefined) ? config.tag : {};
-  config.tag.prefix = (config.tag.prefix !== undefined) ? config.tag.prefix : '';
-  config.tag.suffix = (config.tag.suffix !== undefined) ? config.tag.suffix : '';
-  config.path = (config.path !== undefined) ? config.path : './CHANGELOG.md';
-  return config;
-}
+const DEFAULT = {
+	tag: {
+		prefix: '',
+		suffix: ''
+	},
+	path: './CHANGELOG.md'
+};
 
 function updateDiffLinks(changelog, urlGenerator, oldVersion, newVersion, latest, tagPrefix, tagSuffix) {
   let lines = changelog.split('\n');
@@ -19,7 +21,7 @@ function updateDiffLinks(changelog, urlGenerator, oldVersion, newVersion, latest
 }
 
 function update(versionMetadata, config) {
-  config = applyDefaults(config);
+  config = merge(DEFAULT, config);
   Util.updateFile(config.path, (changelog) => {
     return updateDiffLinks(changelog, 
       config.urlGenerator, 

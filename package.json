@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/HopefulLlama/llama-rlsr-keep-a-changelog#readme",
   "dependencies": {
+    "merge": "^1.2.0",
     "winston": "^2.3.1"
   },
   "devDependencies": {

@@ -1,10 +1,11 @@
+const merge = require('merge');
+
 const Util = require('./Util');
 
-function applyDefaults(config) {
-  config.placeholder = (config.placeholder !== undefined) ? config.placeholder : '';
-  config.path = (config.path !== undefined) ? config.path : './CHANGELOG.md';
-  return config;
-}
+const DEFAULT = {
+	placeholder: '',
+	path: './CHANGELOG.md'
+};
 
 function generateDate(date) {
   let year = date.getFullYear().toString();
@@ -50,7 +51,7 @@ function insertChanges(changelog, newVersion, placeholder) {
 }
 
 function update(versionMetadata, config) {
-  config = applyDefaults(config);
+  config = merge(DEFAULT, config);
   Util.updateFile(config.path, (changelog) => {
     return insertChanges(changelog, versionMetadata.newVersion, config.placeholder);
   });
