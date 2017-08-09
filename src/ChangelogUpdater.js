@@ -1,3 +1,4 @@
+const leftPad = require('left-pad');
 const merge = require('merge');
 
 const Util = require('./Util');
@@ -9,22 +10,14 @@ const DEFAULT = {
 
 function generateDate(date) {
   let year = date.getFullYear().toString();
-  let month = date.getMonth().toString();
-  let day = date.getDate().toString();
-
-  if(month.length === 1) {
-    month = '0' + month;
-  }
-
-  if(day.length === 1) {
-    day = '0' + day;
-  }
+  let month = leftPad((date.getMonth() + 1).toString(), 2, '0');
+  let day = leftPad(date.getDate().toString(), 2, '0');
 
   return `${year}-${month}-${day}`;
 }
 
 function generateChanges(newVersion, placeholder) {
-  let date = new Date();
+  let date = new Date(Date.now());
 
   // Insert in reverse order so we can maintain the index
   let insertions = [];

@@ -1,15 +1,15 @@
 const ChangelogUpdater = require('./ChangelogUpdater');
 const DiffUpdater = require('./DiffUpdater');
 
+function wrapFunction(func) {
+  return (config) => {
+    return (newVersion) => {
+      return func(newVersion, config);
+    };
+  };
+}
+
 module.exports = {
-	updateChangelog: (config) => {
-		return (newVersion) => {
-			return ChangelogUpdater.update(newVersion, config);
-		};
-	},
-	updateDiff: (config) => {
-		return (newVersion) => {
-			return DiffUpdater.update(newVersion, config);
-		}
-	}
+  updateChangelog: wrapFunction(ChangelogUpdater.update),
+  updateDiff: wrapFunction(DiffUpdater.update)
 };

@@ -1,11 +1,12 @@
-var gulp = require('gulp');
-var jshint = require('gulp-jshint');
-var jasmine = require('gulp-jasmine');
+const gulp = require('gulp');
+const jshint = require('gulp-jshint');
+const jasmine = require('gulp-jasmine');
+const sequence = require('gulp-sequence');
 
 gulp.task('default', ['test']);
-gulp.task('test', ['lint', 'unit-test']);
+gulp.task('test', sequence('lint', 'unit-test'));
 
-gulp.task('lint', function() {
+gulp.task('lint', () => {
   return gulp.src([
     'src/**/*.js',
     'spec/**/*.js',
@@ -15,7 +16,7 @@ gulp.task('lint', function() {
   .pipe(jshint.reporter('fail'));
 });
 
-gulp.task('unit-test', function() {
+gulp.task('unit-test', () => {
   return gulp.src('spec/unit/**/*.js')
   .pipe(jasmine());
 });
