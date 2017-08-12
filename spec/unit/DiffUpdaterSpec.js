@@ -15,6 +15,8 @@ const VERSION_METADATA = {
   newVersion: '0.0.2'
 };
 
+const DEFAULT_PATH = './CHANGELOG.md';
+
 function urlGenerator(oldVersion, newVersion) {
   return `MARKER-${oldVersion}-${newVersion}`;
 }
@@ -33,7 +35,6 @@ describe('DiffUpdater', () => {
     });
   }
 
-
   beforeEach(() => {
     newFileContents = undefined;
     config = {
@@ -50,7 +51,7 @@ describe('DiffUpdater', () => {
   });
 
   it('should insert new version and url (with defaults)', () => {
-    assert(config, './CHANGELOG.md', [
+    assert(config, DEFAULT_PATH, [
       '[Unreleased]: MARKER-0.0.2-HEAD',
       '[0.0.2]: MARKER-0.0.1-0.0.2'
     ]);
@@ -67,6 +68,30 @@ describe('DiffUpdater', () => {
     assert(config, './different.md', [
       '[Unreleased]: MARKER-v0.0.2-dab-Swegg',
       '[0.0.2]: MARKER-v0.0.1-dab-v0.0.2-dab'
+    ]);
+  });
+
+  it('should insert with prefix', () => {
+    config.tag = {
+      prefix: 'v'
+    };
+    config.latest = 'Swegg';
+
+    assert(config, DEFAULT_PATH, [
+      '[Unreleased]: MARKER-v0.0.2-Swegg',
+      '[0.0.2]: MARKER-v0.0.1-v0.0.2'
+    ]);
+  });
+
+  it('should insert with suffix', () => {
+    config.tag = {
+      suffix: '-dab'
+    };
+    config.latest = 'Swegg';
+
+    assert(config, DEFAULT_PATH, [
+      '[Unreleased]: MARKER-0.0.2-dab-Swegg',
+      '[0.0.2]: MARKER-0.0.1-dab-0.0.2-dab'
     ]);
   });
 });

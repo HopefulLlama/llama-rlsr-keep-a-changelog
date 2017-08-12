@@ -21,7 +21,7 @@ function updateDiffLinks(changelog, urlGenerator, oldVersion, newVersion, latest
 }
 
 function update(versionMetadata, config) {
-  config = merge(DEFAULT, config);
+  config = merge.recursive(true, DEFAULT, config);
   Util.updateFile(config.path, (changelog) => {
     return updateDiffLinks(changelog, 
       config.urlGenerator, 

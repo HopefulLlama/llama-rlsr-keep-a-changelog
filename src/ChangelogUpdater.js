@@ -44,7 +44,7 @@ function insertChanges(changelog, newVersion, placeholder) {
 }
 
 function update(versionMetadata, config) {
-  config = merge(DEFAULT, config);
+  config = merge(true, DEFAULT, config);
   Util.updateFile(config.path, (changelog) => {
     return insertChanges(changelog, versionMetadata.newVersion, config.placeholder);
   });
