@@ -3,8 +3,8 @@ const DiffUpdater = require('./DiffUpdater');
 
 function wrapFunction(func) {
   return (config) => {
-    return (newVersion) => {
-      return func(newVersion, config);
+    return (versionMetadata, done) => {
+      return func(versionMetadata, config, done);
     };
   };
 }

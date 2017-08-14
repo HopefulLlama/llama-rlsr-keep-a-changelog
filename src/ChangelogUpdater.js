@@ -43,11 +43,12 @@ function insertChanges(changelog, newVersion, placeholder) {
   return lines.join('\n');
 }
 
-function update(versionMetadata, config) {
+function update(versionMetadata, config, done) {
   config = merge(true, DEFAULT, config);
   Util.updateFile(config.path, (changelog) => {
     return insertChanges(changelog, versionMetadata.newVersion, config.placeholder);
   });
+  done();
 }
 
 module.exports = {

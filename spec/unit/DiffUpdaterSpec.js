@@ -17,6 +17,8 @@ const VERSION_METADATA = {
 
 const DEFAULT_PATH = './CHANGELOG.md';
 
+const DONE = jasmine.createSpy('done');
+
 function urlGenerator(oldVersion, newVersion) {
   return `MARKER-${oldVersion}-${newVersion}`;
 }
@@ -26,13 +28,15 @@ describe('DiffUpdater', () => {
   let config;
 
   function assert(conf, filePath, insertedDiffs) {
-    DiffUpdater.update(VERSION_METADATA, conf);
+    DiffUpdater.update(VERSION_METADATA, conf, DONE);
 
     expect(fs.readFileSync).toHaveBeenCalledWith(filePath, ENCODING);
     expect(fs.writeFileSync).toHaveBeenCalledWith(filePath, newFileContents);
     insertedDiffs.forEach((diff) => {
       expect(newFileContents).toContain(diff);
     });
+
+    expect(DONE).toHaveBeenCalled();
   }
 
   beforeEach(() => {

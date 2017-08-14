@@ -20,7 +20,7 @@ function updateDiffLinks(changelog, urlGenerator, oldVersion, newVersion, latest
   return lines.join('\n');
 }
 
-function update(versionMetadata, config) {
+function update(versionMetadata, config, done) {
   config = merge.recursive(true, DEFAULT, config);
   Util.updateFile(config.path, (changelog) => {
     return updateDiffLinks(changelog, 
@@ -32,6 +32,7 @@ function update(versionMetadata, config) {
       config.tag.suffix
     );
   });
+  done();
 }
 
 module.exports = {

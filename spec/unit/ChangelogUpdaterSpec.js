@@ -17,19 +17,22 @@ const VERSION_METADATA = {
   newVersion: '0.0.2'
 };
 
+const DONE = jasmine.createSpy('done');
 
 describe('ChangelogUpdater', () => {
   let newFileContents;
   let config;
 
   function assert(conf, filePath, insertedDiffs) {
-    ChangelogUpdater.update(VERSION_METADATA, conf);
+    ChangelogUpdater.update(VERSION_METADATA, conf, DONE);
 
     expect(fs.readFileSync).toHaveBeenCalledWith(filePath, ENCODING);
     expect(fs.writeFileSync).toHaveBeenCalledWith(filePath, newFileContents);
     insertedDiffs.forEach((diff) => {
       expect(newFileContents).toContain(diff);
     });
+
+    expect(DONE).toHaveBeenCalled();
   }
 
   beforeEach(() => {
